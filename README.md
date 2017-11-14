@@ -1,6 +1,6 @@
 # Web Engineering 2017-2018 / URL Shortener
 
-[![Build Status](https://travis-ci.org/UNIZAR-30246-WebEngineering/UrlShortener.svg?branch=master)](https://travis-ci.org/UNIZAR-30246-WebEngineering/UrlShortener)
+https://github.com/LeonBP/UrlShortener | [![Build Status](https://travis-ci.org/LeonBP/UrlShortener.svg?branch=master)](https://travis-ci.org/LeonBP/UrlShortener)
 
 This is the shared repository for the project developed in this course. Go to the [wiki](../../wiki) to start your project.
 
