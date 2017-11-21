@@ -5,8 +5,8 @@ swagger: '2.0'
 
 # This is your document metadata
 info:
-  version: "0.0.0"
-  title: <Red Pepper Geo URL shortener>
+  version: "0.1"
+  title: Red Pepper Geo URL shortener
 
 # Describe your paths here
 paths:
@@ -20,13 +20,14 @@ paths:
       # This is array of GET operation parameters:
       parameters:
         # An example parameter that is in query and is required
-        -
-          name: UserIP
+        - name: UserIP
           in: header
           description: Origin IP of request
           required: true
           type: string
       # Expected responses for this operation:
+      tags: 
+        - Basic services
       responses:
         # Response code
         200:
@@ -36,3 +37,119 @@ paths:
           schema:
             title: Home HTML
             type: file
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    post:
+      description: |
+        Post an URL to be validated and shortened.
+      parameters:
+      
+        - name: url
+          in: query
+          description: URL to be shortened
+          required: true
+          type: string
+          
+        - name: mode
+          in: body
+          description: Configuraion of the geohash generator
+          required: true
+          schema: 
+            $ref: '#/definitions/Config'
+      tags:
+        - Basic services
+      responses:
+        201:
+          description: URL shortened correctly and stored in db.
+          schema:
+            title: shortened Geohash URL
+            type: string
+        403:
+          description: URL not valid.
+          schema:
+            $ref: '#/definitions/Error'    
+  
+  /{geohash}:
+    get:
+      description: |
+        Redirects de {geohash} shortened url to the original url.
+      parameters:
+        - name: geohash
+          in: path
+          description: geohash that defines the shortened url
+          required: true
+          type: string
+      tags:
+        - Basic services
+      responses:
+        200:
+          description: Original URL retrieved successfully
+          schema:
+            title: Original URL
+            type: string
+        404:
+          description: The {geohash} shortened url is not in the db
+          schema: 
+            $ref: '#/definitions/Error'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+          
+
+            
+  /QR:
+    get:
+      description: |
+        Obtain the QR code associated with the shortened URL.
+      tags: 
+        - Added funcionality
+      responses:
+        200:
+          description: OK
+    
+  /pinpoint:
+    get:
+      description: |
+        Obtain the URL(s) near the client location.
+      tags: 
+        - Added funcionality
+      responses:
+        200:
+          description: OK
+  /serviceInfo:
+    get:
+      description: |
+        Obtain information like users, clicks or shortened URLs
+      tags: 
+        - Added funcionality
+      responses:
+        200:
+          description: OK
+    
+definitions:
+  Error:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
+      fields:
+        type: string
+  Config:
+    type: object
+    properties:
+      mode:
+        type: integer
+        format: int32
+      clientIP:
+        type: integer
+        format: int32
+      precision:
+        type: integer
+        format: int32
+    
