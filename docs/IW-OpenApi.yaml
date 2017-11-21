@@ -5,7 +5,7 @@ swagger: '2.0'
 
 # This is your document metadata
 info:
-  version: "0.1"
+  version: "0.2"
   title: Red Pepper Geo URL shortener
 
 # Describe your paths here
@@ -17,14 +17,6 @@ paths:
       # Describe this verb here. Note: you can use markdown
       description: |
         Gets the .jsp file with the associated JavaScript that represents the UI of the web service.
-      # This is array of GET operation parameters:
-      parameters:
-        # An example parameter that is in query and is required
-        - name: UserIP
-          in: header
-          description: Origin IP of request
-          required: true
-          type: string
       # Expected responses for this operation:
       tags: 
         - Basic services
@@ -54,7 +46,7 @@ paths:
           
         - name: mode
           in: body
-          description: Configuraion of the geohash generator
+          description: Configuration of the geohash url generator
           required: true
           schema: 
             $ref: '#/definitions/Config'
@@ -106,28 +98,69 @@ paths:
         Obtain the QR code associated with the shortened URL.
       tags: 
         - Added funcionality
+      produces:
+        - image/png
+      parameters:
+        - name: url
+          in: query
+          description: shortened URL geohash
+          required: true
+          type: string
       responses:
-        200:
-          description: OK
-    
+        200:           
+          description: PNG with the QR code generated
+          schema: 
+            type: string
+            format: binary
+        404:
+          description: Shortened URL provided not in db.
+          schema: 
+            $ref: '#/definitions/Error'
+        default:
+          description: Unexpected error.
+          schema:
+            $ref: '#/definitions/Error'
   /pinpoint:
     get:
       description: |
         Obtain the URL(s) near the client location.
       tags: 
         - Added funcionality
+      produces:
+        - application/vnd.google-earth.kml+xml
+        - application/gml+xml 
+        - application/vnd.osm+xml
+      parameters:
+        - name: pinpointParameters
+          in: body
+          description: Parameters to determine the response
+          required: true
+          schema:
+            $ref: '#/definitions/PinpointParameters'
       responses:
         200:
-          description: OK
+          description: Found URL(s) near the client location that are within the
+            parameters provided
+        204:
+          description: There are no URL(s) near the client location that are within the
+            parameters provided
+        default:
+          description: Unexpected error
   /serviceInfo:
     get:
       description: |
         Obtain information like users, clicks or shortened URLs
+      produces: 
+        - application/json
       tags: 
         - Added funcionality
       responses:
         200:
-          description: OK
+          description: Data successfully retrieved
+          schema: 
+            $ref: '#/definitions/InfoData'
+        default: 
+          description: Unexpected error
     
 definitions:
   Error:
@@ -152,4 +185,28 @@ definitions:
       precision:
         type: integer
         format: int32
+  PinpointParameters:
+    type: object
+    properties:
+      redirect:
+        type: boolean
+      radio:
+        type: integer
+        format: int32
+      resultNumber:
+        type: integer
+        format: int32
+  InfoData:
+    type: object
+    properties:
+      users:
+        type: integer
+        format: int32
+      clicks:
+        type: integer
+        format: int32
+      urls:
+        type: integer
+        format: int32
+        
     
