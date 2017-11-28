@@ -31,6 +31,6 @@ public interface QRApi {
     
     @RequestMapping(value = "/QR",
         method = RequestMethod.GET)
-    ResponseEntity<Void> qRGet();
+    ResponseEntity<Void> qRGet(@RequestParam("url") String url);
 
 }
