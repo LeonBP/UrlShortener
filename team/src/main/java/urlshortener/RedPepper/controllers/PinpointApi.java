@@ -6,6 +6,7 @@
 package urlshortener.RedPepper.controllers;
 
 
+import com.fasterxml.jackson.databind.JsonNode;
 import io.swagger.annotations.*;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
+import urlshortener.RedPepper.model.PinPointParameters;
 
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -27,12 +29,12 @@ import javax.validation.Valid;
 @Api(value = "pinpoint", description = "the pinpoint API")
 public interface PinpointApi {
 
-    @ApiOperation(value = "", notes = "Obtain the URL(s) near the client location. ", response = Void.class, tags={ "Added funcionality", })
+    @ApiOperation(value = "", notes = "Obtain the URL(s) near the client location. ", response =String.class, tags={ "Added funcionality", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "OK", response = String.class) })
     
     @RequestMapping(value = "/pinpoint",
-        method = RequestMethod.GET)
-    ResponseEntity<String> pinpointGet(HttpServletRequest request);
+        method = RequestMethod.GET,headers = "Accept=application/json")
+    ResponseEntity<String> pinpointGet(HttpServletRequest request, @RequestBody PinPointParameters jsonParam);
 
 }
