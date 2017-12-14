@@ -5,34 +5,23 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.RequestBuilder;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.request.RequestPostProcessor;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import urlshortener.RedPepper.controllers.PinpointApiController;
-import urlshortener.RedPepper.web.UrlShortenerControllerWithLogs;
 import urlshortener.common.repository.ClickRepository;
 import urlshortener.common.repository.ShortURLRepository;
-import urlshortener.common.web.UrlShortenerController;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class PinpointTest {
 
     private MockMvc mockMvc;
-
-    @Mock
-    private ClickRepository clickRepository;
-
-    @Mock
-    private ShortURLRepository shortURLRepository;
 
     @InjectMocks
     private PinpointApiController pinPoint;
@@ -46,10 +35,21 @@ public class PinpointTest {
     @Test
     public void thatGetsALocationOnCorrectIP()
             throws Exception {
-        String expectedJson = "{\"ip\":\"90.94.192.43\",\"city\":\"Zaragoza\",\"latitude\":41.6453,\"longitude\":-0.8849}";
-        mockMvc.perform(get("/pinpoint").with(remoteAddr("90.94.192.43"))).andDo(print())
+        String expectedJson = "{\"ip\":\"90.94.192.43\",\"city\":\"Zaragoza\"," +
+                "\"latitude\":41.6453,\"longitude\":-0.8849}";
+        String bodyParams = "{\"redirect\": false,\"radio\": 0,\"resultNumber\": 1}";
+        mockMvc.perform(get("/pinpoint").with(remoteAddr("90.94.192.43"))
+                .contentType(MediaType.APPLICATION_JSON).content(bodyParams)).andDo(print())
                 .andExpect(status().isOk()).andExpect(content().string(expectedJson));
 
+    }
+
+    @Test
+    public void thatBadIpGetsError404()
+            throws Exception{
+        String bodyParams = "{\"redirect\": false,\"radio\": 0,\"resultNumber\": 1,\"cosa\":\"kek\"}";
+        mockMvc.perform(get("/pinpoint").with(remoteAddr("0.0.0.1"))
+                .contentType(MediaType.APPLICATION_JSON).content(bodyParams)).andExpect(status().isNotFound());
     }
 
     private static RequestPostProcessor remoteAddr(final String remoteAddr) {
