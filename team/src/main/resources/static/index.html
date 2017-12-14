@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>URL Shortener</title>
+<title>Map Your URL</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" type="text/css"
 	href="webjars/bootstrap/3.3.5/css/bootstrap.min.css" />
@@ -15,27 +15,71 @@
 	<div class="container-full">
 		<div class="row">
 			<div class="col-lg-12 text-center">
-				<h1>URL Shortener</h1>
-				<p class="lead">A front-end example page for the project</p>
+				<img src="images/mapyoururl-logo.png" class="img-responsive center-block" alt="Map Your URL logo" width="539" height="200">
+				<p class="lead">The best way of putting your URL in the map</p>
 				<br>
-				<form class="col-lg-12" role="form" id="shortener" action="">
-					<div class="input-group input-group-lg col-sm-offset-4 col-sm-4">
-						<input type="text" class="center-block form-control input-lg"
-							title="Enter a URL" placeholder="Enter a URL" name="url">
-						<span class="input-group-btn"><button
-								class="btn btn-lg btn-primary" type="submit">Short me!</button></span>
-					</div>
-				</form>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-lg-12 text-center">
-				<div class="col-sm-offset-4 col-sm-4 text-center">
-					<br />
-					<div id="result" />
-				</div>
-			</div>
-		</div>
-	</div>
+            
+            <ul class="nav nav-tabs nav-justified">
+               <li class="active"><a class="lead" data-toggle="tab" href="#short">Shorten URL</a></li>
+               <li><a class="lead" data-toggle="tab" href="#pin">Pinpoint</a></li>
+            </ul>
+
+            <div class="tab-content">
+               <div id="short" class="tab-pane fade in active">
+                  <br>
+                  <form class="col-lg-14" role="form" id="shortener" action="">
+                     <div class="input-group input-group-lg col-sm-offset-4 col-sm-4">
+                        <input type="text" class="form-control input-lg" title="Enter a URL" placeholder="Write your URL here and..." name="url">
+                        <span class="input-group-btn"><button class="btn btn-lg btn-warning" type="submit">Map it!</button></span>
+                     </div>
+                     <div class="radio lead">
+                        <label>
+                           <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
+                              Find a city randomly
+                        </label>
+                     </div>
+                     <div class="radio lead">
+                        <label>
+                           <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+                              Find nearest city to me
+                        </label>
+                     </div>
+                     <div class="radio lead">
+                        <label>
+                           <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3">
+                              Find nearest city to <em>Map your URL</em> servers
+                        </label>
+                     </div>
+                  </form>
+                  <div class="row">
+                     <div class="col-lg-12 text-center">
+                        <div class="col-sm-offset-4 col-sm-4 text-center">
+                           <br>
+                           <div id="shortURL"></div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div id="pin" class="tab-pane fade">
+                  <br>
+                  <form class="col-lg-14" role="form" id="pinpoint" action="">
+                     <div class="input-group  input-group-lg col-sm-offset-4 col-sm-4">
+                        <span class="input-group-btn"><button type="submit" class="btn btn-primary">Send explorers</button></span>
+                        <span class="input-group-btn"><button type="submit" class="btn btn-danger">To the adventure!</button></span>
+                     </div>
+                  </form>
+                  <div class="row">
+                     <div class="col-lg-12 text-center">
+                        <div class="col-sm-offset-4 col-sm-4 text-center">
+                           <br>
+                           <div id="destination"></div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
 </body>
 </html>
