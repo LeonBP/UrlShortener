@@ -17,6 +17,10 @@ dependencies {
     compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.9.0'
 //    compile "joda-time:joda-time:*"
     compile "javax.validation:validation-api:1.1.0.Final"
+    compile "org.springframework.cloud:spring-cloud-starter-hystrix:1.1.5.RELEASE"
+    compile "org.springframework.boot:spring-boot-starter-web:1.4.0.RELEASE"
+    compile "org.springframework.cloud:spring-cloud-starter-feign:1.1.5.RELEASE"
+    compile group: 'io.github.openfeign', name: 'feign-jackson', version: '9.3.1'
 
     // Testing framework
     testCompile 'org.springframework.boot:spring-boot-starter-test'

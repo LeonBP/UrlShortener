@@ -29,12 +29,13 @@ import javax.validation.Valid;
 @Api(value = "pinpoint", description = "the pinpoint API")
 public interface PinpointApi {
 
-    @ApiOperation(value = "", notes = "Obtain the URL(s) near the client location. ", response =String.class, tags={ "Added funcionality", })
+    @ApiOperation(value = "", notes = "Obtain the URL(s) near the client location. ",
+            response =String.class, tags={ "Added funcionality", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "OK", response = String.class) })
     
     @RequestMapping(value = "/pinpoint",
-        method = RequestMethod.GET,headers = "Accept=application/json")
-    ResponseEntity<String> pinpointGet(HttpServletRequest request, @RequestBody PinPointParameters jsonParam);
+        method = RequestMethod.GET,consumes="application/json", produces = "application/json")
+    ResponseEntity pinpointGet(HttpServletRequest request, @RequestBody PinPointParameters jsonParam);
 
 }
