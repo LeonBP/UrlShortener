@@ -5,7 +5,7 @@ $(document).ready(
                 event.preventDefault();
                 $.ajax({
                     type : "POST",
-                    url : "/link",
+                    url : "/",
                     data : $(this).serialize(),
                     success : function(msg) {
                         $("#shortURL").html(
@@ -29,14 +29,22 @@ $(document).ready(
             function(event) {
                 event.preventDefault();
                 $.ajax({
-                    type : "GET",
+                    type : "POST",
                     url : "/pinpoint",
-                    data : $(this).serialize(),
+                    dataType: "json",
+                    data : JSON.stringify({"redirect":false, "radio":100, "resultNumber":2}),
+                    contentType: "application/json",
                     success : function(msg) {
-                        $.ajax({
-                             type : "GET",
-                             url : "msg.uri"
-                         });
+                        $("#destination").html(
+                            "<p class='lead'>"
+                            + msg.ip
+                            + " "
+                            + msg.city
+                            + " "
+                            + msg.latitude
+                            + " "
+                            + msg.longitude
+                            + "</a></div>");
                     },
                     error : function() {
                         $("#destination").html(

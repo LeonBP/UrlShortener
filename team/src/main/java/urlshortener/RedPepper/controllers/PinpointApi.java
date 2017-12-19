@@ -35,7 +35,7 @@ public interface PinpointApi {
         @ApiResponse(code = 200, message = "OK", response = String.class) })
     
     @RequestMapping(value = "/pinpoint",
-        method = RequestMethod.GET,consumes="application/json", produces = "application/json")
+        method = RequestMethod.POST,consumes="application/json", produces = "application/json")
     ResponseEntity pinpointGet(HttpServletRequest request, @RequestBody PinPointParameters jsonParam);
 
 }
