@@ -1,35 +1,23 @@
 package urlshortener.RedPepper.controllers;
 
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import com.netflix.hystrix.Hystrix;
 import feign.Feign;
 import feign.RequestLine;
-import feign.hystrix.HystrixFeign;
 import feign.jackson.JacksonDecoder;
-import org.jboss.logging.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.cloud.netflix.feign.FeignClient;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.RestTemplate;
 import urlshortener.RedPepper.model.Error;
 import urlshortener.RedPepper.model.IpGeoResults;
 import urlshortener.RedPepper.model.PinPointParameters;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2017-11-21T17:50:33.590Z")
 
@@ -46,15 +34,7 @@ public class PinpointApiController implements PinpointApi {
         IpGeoResults location = getLocation(ip);
         logger.info(location.toString());
 
-        ObjectMapper json = new ObjectMapper();
-        String jsonResult = new String() ;
-        try {
-            jsonResult = json.writeValueAsString(location);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-            return new ResponseEntity(jsonResult , HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-        ResponseEntity response = new ResponseEntity<String>(jsonResult , HttpStatus.OK);
+        ResponseEntity response = new ResponseEntity(location , HttpStatus.OK);
 
         return response;
     }

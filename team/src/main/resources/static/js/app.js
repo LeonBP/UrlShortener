@@ -5,15 +5,15 @@ $(document).ready(
                 event.preventDefault();
                 $.ajax({
                     type : "POST",
-                    url : "/",
-                    data : JSON.stringify({"url":document.getElementById("url").value, "mode":mode, "clientIP":"10.1.54.154", "precision":"4"}),
+                    url : "/new",
+                    data : JSON.stringify({"url":document.getElementById("url").value, "mode":mode, "precision":"4"}),
                     contentType : "application/json",
                     success : function(msg) {
                         $("#shortURL").html(
                             "<div class='alert alert-success lead'><a target='_blank' href='"
-                            + msg.title
+                            + msg
                             + "'>"
-                            + msg.title
+                            + msg
                             + "</a></div>");
                     },
                     error : function() {

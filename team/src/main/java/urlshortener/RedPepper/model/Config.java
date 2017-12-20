@@ -1,4 +1,4 @@
-package io.swagger.model;
+package urlshortener.RedPepper.model;
 
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -23,6 +23,16 @@ public class Config   {
   @JsonProperty("precision")
   private Integer precision = null;
 
+  public String getUrl() {
+    return url;
+  }
+
+  public void setUrl(String url) {
+    this.url = url;
+  }
+
+  @JsonProperty("url")
+  private String url = null;
   public Config mode(Integer mode) {
     this.mode = mode;
     return this;

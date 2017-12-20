@@ -12,7 +12,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @SpringBootApplication
 @EnableSwagger2
 @EnableFeignClients
-@ComponentScan(basePackages = { "io.swagger", "io.swagger.api","urlshortener.RedPepper" })
+//@ComponentScan(basePackages = {"urlshortener.RedPepper" })
 public class Application extends SpringBootServletInitializer {
 
 	public static void main(String[] args) throws Exception {
