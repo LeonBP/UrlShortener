@@ -6,13 +6,13 @@ $(document).ready(
                 $.ajax({
                     type : "POST",
                     url : "/",
-                    data : $(this).serialize(),
+                    data : {"url":document.getElementById("url").value, "mode":mode, "clientIP":"10.1.54.154", "precision":"4"},
                     success : function(msg) {
                         $("#shortURL").html(
                             "<div class='alert alert-success lead'><a target='_blank' href='"
-                            + msg.uri
+                            + msg.title
                             + "'>"
-                            + msg.uri
+                            + msg.title
                             + "</a></div>");
                     },
                     error : function() {
@@ -31,9 +31,7 @@ $(document).ready(
                 $.ajax({
                     type : "POST",
                     url : "/pinpoint",
-                    dataType: "json",
-                    data : JSON.stringify({"redirect":false, "radio":100, "resultNumber":2}),
-                    contentType: "application/json",
+                    data : {"redirect":redirect, "radio":document.getElementById("radio").value, "resultNumber":document.getElementById("resultNumber").value},
                     success : function(msg) {
                         $("#destination").html(
                             "<p class='lead'>"
@@ -53,3 +51,12 @@ $(document).ready(
                 });
             });
     });
+    
+var redirect="false";
+function redirectChange(requested){
+   redirect=requested;
+}
+var mode="0";
+function modeChange(code){
+   mode=code;
+}

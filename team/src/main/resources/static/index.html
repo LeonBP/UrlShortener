@@ -29,24 +29,24 @@
                   <br>
                   <form class="col-lg-14" role="form" id="shortener" action="">
                      <div class="input-group input-group-lg col-sm-offset-4 col-sm-4">
-                        <input type="text" class="form-control input-lg" title="Enter a URL" placeholder="Write your URL here and..." name="url">
+                        <input type="text" class="form-control input-lg" title="Enter a URL" placeholder="Write your URL here and..." id="url">
                         <span class="input-group-btn"><button class="btn btn-lg btn-warning" type="submit">Map it!</button></span>
                      </div>
                      <div class="radio lead">
                         <label>
-                           <input type="radio" name="mode" id="randomly" value="option1" checked>
+                           <input type="radio" name="mode" onClick=modeChange("0") checked>
                               Find a city randomly
                         </label>
                      </div>
                      <div class="radio lead">
                         <label>
-                           <input type="radio" name="mode" id="nearest2client" value="option2">
+                           <input type="radio" name="mode" onClick=modeChange("1")>
                               Find nearest city to me
                         </label>
                      </div>
                      <div class="radio lead">
                         <label>
-                           <input type="radio" name="mode" id="nearest2server" value="option3">
+                           <input type="radio" name="mode" onClick=modeChange("2")>
                               Find nearest city to <em>Map your URL</em> servers
                         </label>
                      </div>
@@ -64,8 +64,10 @@
                   <br>
                   <form class="col-lg-14" role="form" id="pinpoint" action="">
                      <div class="input-group  input-group-lg col-sm-offset-4 col-sm-4">
-                        <span class="input-group-btn"><button type="submit" class="btn btn-primary">Send explorers</button></span>
-                        <span class="input-group-btn"><button type="submit" class="btn btn-danger">To the adventure!</button></span>
+                        <span class="input-group-btn"><button type="submit" title="Search close URLs" onClick=redirectChange("false") class="btn btn-primary">Send explorers</button></span>
+                        <input type="text" class="form-control input-lg" title="Radio of search" placeholder="Radio of search" id="radio">
+                        <input type="text" class="form-control input-lg" title="Number of results" placeholder="Number of explorers" id="resultNumber">
+                        <span class="input-group-btn"><button type="submit" title="Redirect to closest URL" onClick=redirectChange("true") class="btn btn-danger">To the adventure!</button></span>
                      </div>
                   </form>
                   <div class="row">
