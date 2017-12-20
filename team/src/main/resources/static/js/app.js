@@ -6,7 +6,8 @@ $(document).ready(
                 $.ajax({
                     type : "POST",
                     url : "/",
-                    data : {"url":document.getElementById("url").value, "mode":mode, "clientIP":"10.1.54.154", "precision":"4"},
+                    data : JSON.stringify({"url":document.getElementById("url").value, "mode":mode, "clientIP":"10.1.54.154", "precision":"4"}),
+                    contentType : "application/json",
                     success : function(msg) {
                         $("#shortURL").html(
                             "<div class='alert alert-success lead'><a target='_blank' href='"
@@ -31,7 +32,8 @@ $(document).ready(
                 $.ajax({
                     type : "POST",
                     url : "/pinpoint",
-                    data : {"redirect":redirect, "radio":document.getElementById("radio").value, "resultNumber":document.getElementById("resultNumber").value},
+                    data : JSON.stringify({"redirect":redirect, "radio":document.getElementById("radio").value, "resultNumber":document.getElementById("resultNumber").value}),
+                    contentType : "application/json",
                     success : function(msg) {
                         $("#destination").html(
                             "<p class='lead'>"
