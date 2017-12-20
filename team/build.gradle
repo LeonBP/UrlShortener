@@ -22,6 +22,11 @@ dependencies {
     compile "org.springframework.cloud:spring-cloud-starter-feign:1.1.5.RELEASE"
     compile group: 'io.github.openfeign', name: 'feign-jackson', version: '9.3.1'
 
+    // https://mvnrepository.com/artifact/com.spatial4j/spatial4j
+    compile group: 'com.spatial4j', name: 'spatial4j', version: '0.4.1'
+
+
+
     // Testing framework
     testCompile 'org.springframework.boot:spring-boot-starter-test'
     testCompile 'org.apache.httpcomponents:httpclient'

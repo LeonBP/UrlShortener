@@ -1,5 +1,6 @@
 package urlshortener.RedPepper.controllers;
 
+import com.spatial4j.core.io.GeohashUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
@@ -34,7 +35,8 @@ public class DefaultApiController implements DefaultApi{
         @ApiParam(value = "Configuraion of the geohash generator" ,required=true )  @Valid @RequestBody Config mode) {
         // do some magic!
         logger.info("url: "+mode.getUrl());
-        return new ResponseEntity<String>("hola mundo", HttpStatus.OK);
+        String hash =GeohashUtils.encodeLatLon(41.684,-0.891);
+        return new ResponseEntity<String>(hash, HttpStatus.OK);
     }
 
 }
