@@ -4,9 +4,11 @@ import com.spatial4j.core.io.GeohashUtils;
 import feign.Feign;
 import feign.RequestLine;
 import feign.jackson.JacksonDecoder;
+import org.apache.http.HttpResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
+import urlshortener.RedPepper.DBConnection.DBOperations;
 import urlshortener.RedPepper.model.City;
 import urlshortener.RedPepper.model.Error;
 import org.springframework.core.io.Resource;
@@ -43,8 +45,8 @@ public class DefaultApiController implements DefaultApi{
         // do some magic!
         logger.info("url: "+mode.getUrl());
         City c = GetCitiyFromGazeteer(mode);
-        //TODO: add URL and geohash to database
         String hash =GeohashUtils.encodeLatLon(c.getLat(),c.getLng());
+        boolean response=DBOperations.addURL(c,mode.getUrl(),hash);
         return new ResponseEntity<String>(hash, HttpStatus.OK);
     }
 

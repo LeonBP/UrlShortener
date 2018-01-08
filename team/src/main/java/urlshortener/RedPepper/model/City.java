@@ -11,23 +11,23 @@ public class City {
 
     private String name;
 
-    public double getLng() {
+    public float getLng() {
         return lng;
     }
 
-    public void setLng(double lng) {
+    public void setLng(float lng) {
         this.lng = lng;
     }
 
-    public double getLat() {
+    public float getLat() {
         return lat;
     }
 
-    public void setLat(double lat) {
+    public void setLat(float lat) {
         this.lat = lat;
     }
 
-    private double lng;
-    private double lat;
+    private float lng;
+    private float lat;
 
 }
