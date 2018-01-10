@@ -15,6 +15,7 @@ public class Click {
 
 	public Click(Long id, String hash, Date created, String referrer,
 			String browser, String platform, String ip, String country) {
+
 		this.id = id;
 		this.hash = hash;
 		this.created = created;
@@ -26,34 +27,42 @@ public class Click {
 	}
 
 	public Long getId() {
+
 		return id;
 	}
 
 	public String getHash() {
+
 		return hash;
 	}
 
 	public Date getCreated() {
+
 		return created;
 	}
 
 	public String getReferrer() {
+
 		return referrer;
 	}
 
 	public String getBrowser() {
+
 		return browser;
 	}
 
 	public String getPlatform() {
+
 		return platform;
 	}
 
 	public String getIp() {
+
 		return ip;
 	}
 
 	public String getCountry() {
+
 		return country;
 	}
 }

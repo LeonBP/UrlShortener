@@ -32,7 +32,7 @@ api.route('/urls')
     .post(UrlsCtrl.add);
 
 api.route('/urls/:id')
-    .get(UrlsCtrl.findById)
+    .get(UrlsCtrl.findByGeohash)
     .put(UrlsCtrl.update)
     .delete(UrlsCtrl.delete);
 

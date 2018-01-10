@@ -9,11 +9,11 @@ exports.findAll = function(req, res) {
     });
 };
 
-//GET - Return a register with specified ID
-exports.findById = function(req, res) {
-    UrlModel.getUrl(req.params.id, function(err, client) {
+//GET - Return a register with specified geohash
+exports.findByGeohash = function(req, res) {
+    UrlModel.getUrlGeohash(req.params.id, function(err, client) {
         if(err) return res.send(500, err.message);
-        console.log('GET /urls/' + req.params.id);
+        console.log('GET /urls/' + req.params.geohash);
         res.status(200).jsonp(client);
     });
 };

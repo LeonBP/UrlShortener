@@ -59,11 +59,11 @@ urlModel.getUrls = function(callback)
 }
 
 //obtenemos un jugador por su id
-urlModel.getUrl = function(id,callback)
+urlModel.getUrlGeohash = function(geohash,callback)
 {
     if (connection)
     {
-        var sql = 'SELECT * FROM urls WHERE id = ' + connection.escape(id);
+        var sql = 'SELECT * FROM urls WHERE urlAcortada = ' + connection.escape(geohash);
         connection.query(sql, function(error, row)
         {
             if(error)
