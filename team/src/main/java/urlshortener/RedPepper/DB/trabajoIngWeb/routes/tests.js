@@ -26,6 +26,6 @@ router.route('/')
         }
 
         http.request(options, callback).end();
-        res.json(200,"Petición GET realizada con éxitto");
+        res.json(200,"Petición GET realizada con éxito");
     });
 module.exports = router;
