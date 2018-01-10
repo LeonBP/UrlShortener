@@ -4,6 +4,7 @@ package urlshortener.RedPepper.model;
  * Created by ivansantamaria on 19/12/17.
  */
 public class Checker {
+
     String url;
 
     public Checker(String url) {
@@ -11,10 +12,15 @@ public class Checker {
     }
 
     public IpGeoResults cityUrl(String url) {
+
         IpGeoResults ipGeoResults = new IpGeoResults();
+
         ipGeoResults.setCity("zaragoza");
+
         ipGeoResults.setLatitude(41.39);
+
         ipGeoResults.setLongitude(0.52);
+
         return ipGeoResults;
     }
 }
