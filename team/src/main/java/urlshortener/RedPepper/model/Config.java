@@ -24,10 +24,12 @@ public class Config   {
   private Integer precision = null;
 
   public String getUrl() {
+
     return url;
   }
 
   public void setUrl(String url) {
+
     this.url = url;
   }
 
@@ -46,10 +48,12 @@ public class Config   {
 
 
   public Integer getMode() {
+
     return mode;
   }
 
   public void setMode(Integer mode) {
+
     this.mode = mode;
   }
 
@@ -70,6 +74,7 @@ public class Config   {
   }
 
   public void setClientIP(Integer clientIP) {
+
     this.clientIP = clientIP;
   }
 
@@ -86,10 +91,12 @@ public class Config   {
 
 
   public Integer getPrecision() {
+
     return precision;
   }
 
   public void setPrecision(Integer precision) {
+
     this.precision = precision;
   }
 
@@ -110,6 +117,7 @@ public class Config   {
 
   @Override
   public int hashCode() {
+
     return Objects.hash(mode, clientIP, precision);
   }
 
@@ -133,6 +141,7 @@ public class Config   {
     if (o == null) {
       return "null";
     }
+
     return o.toString().replace("\n", "\n    ");
   }
 }

@@ -36,10 +36,12 @@ public class Error   {
 
 
   public Integer getCode() {
+
     return code;
   }
 
   public void setCode(Integer code) {
+
     this.code = code;
   }
 
@@ -56,10 +58,12 @@ public class Error   {
 
 
   public String getMessage() {
+
     return message;
   }
 
   public void setMessage(String message) {
+
     this.message = message;
   }
 
@@ -76,10 +80,12 @@ public class Error   {
 
 
   public String getFields() {
+
     return fields;
   }
 
   public void setFields(String fields) {
+
     this.fields = fields;
   }
 
@@ -100,6 +106,7 @@ public class Error   {
 
   @Override
   public int hashCode() {
+
     return Objects.hash(code, message, fields);
   }
 
@@ -120,6 +127,7 @@ public class Error   {
    * (except the first line).
    */
   private String toIndentedString(java.lang.Object o) {
+
     if (o == null) {
       return "null";
     }
