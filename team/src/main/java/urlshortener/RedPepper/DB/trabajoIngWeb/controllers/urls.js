@@ -13,7 +13,7 @@ exports.findAll = function(req, res) {
 exports.findByGeohash = function(req, res) {
     UrlModel.getUrlGeohash(req.params.id, function(err, client) {
         if(err) return res.send(500, err.message);
-        console.log('GET /urls/' + req.params.geohash);
+        console.log('GET /urls/' + req.params.id);
         res.status(200).jsonp(client);
     });
 };
@@ -38,10 +38,10 @@ exports.add = function(req, res) {
 
 //PUT - Update a register already exists
 exports.update = function(req, res) {
-    UrlModel.getUrl(req.params.id, function(err, url) {
+    UrlModel.getUrlGeohash(req.params.id, function(err, url) {
         console.log(req.body);
         var url = {
-            id: req.params.id,
+            id: req.body.id,
             url: req.body.url,
             urlAcortada: req.body.urlAcortada,
             clicks: req.body.clicks,

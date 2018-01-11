@@ -98,16 +98,15 @@ urlModel.insertUrl = function(urlData,callback)
     }
 }
 
-urlModel.updateUrl = function(id, callback)
+urlModel.updateUrl = function(urlData, callback)
 {
     if (connection)
     {
         var sql = 'UPDATE urls SET url = ' + connection.escape(urlData.url) + ',' +
-            'urlAcortada = ' + connection.escape(urlData.urlAcortada) +',' +
             'clicks = ' + connection.escape(urlData.clicks) +',' +
-            'latitud = ' + connection.escape(urlData.latitud) +
+            'latitud = ' + connection.escape(urlData.latitud) + ',' +
             'longitud = ' + connection.escape(urlData.longitud) +
-            ' WHERE id = ' + urlData.id;
+            ' WHERE urlAcortada = ' + urlData.urlAcortada;
 
         connection.query(sql, function(error, result)
         {
@@ -125,17 +124,17 @@ urlModel.updateUrl = function(id, callback)
 
 
 //eliminar un usuario pasando la id a eliminar
-urlModel.deleteUrl = function(id, callback)
+urlModel.deleteUrl = function(geohash, callback)
 {
     if(connection)
     {
-        var sqlExists = 'SELECT * FROM urls WHERE id = ' + connection.escape(id);
+        var sqlExists = 'SELECT * FROM urls WHERE urlAcortada = ' + connection.escape(geohash);
         connection.query(sqlExists, function(err, row)
         {
 //si existe la id del usuario a eliminar
             if(row)
             {
-                var sql = 'DELETE FROM urls WHERE id = ' + connection.escape(id);
+                var sql = 'DELETE FROM urls WHERE urlAcortada = ' + connection.escape(geohash);
                 connection.query(sql, function(error, result)
                 {
                     if(error)
