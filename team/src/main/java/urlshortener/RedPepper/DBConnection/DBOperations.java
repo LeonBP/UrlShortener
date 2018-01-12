@@ -16,4 +16,17 @@ public class DBOperations {
         }catch (HttpMessageNotReadableException e){}
         return true;
     }
+
+    public static String getURL(String geohash){
+        DBUrl[] DBresult;
+        RestTemplate getWithGeo = new RestTemplate();
+        DBresult= getWithGeo.getForObject("http://localhost:3000/api/urls/"+geohash,DBUrl[].class);
+        return DBresult[0].getUrl();
+    }
+
+    public static boolean deleteByHash(String geohash){
+        RestTemplate delete = new RestTemplate();
+        delete.delete("http://localhost:3000/api/urls/"+geohash);
+        return  true;
+    }
 }
