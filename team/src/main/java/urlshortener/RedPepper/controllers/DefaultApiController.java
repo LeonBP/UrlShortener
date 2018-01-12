@@ -28,6 +28,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -54,6 +55,7 @@ public class DefaultApiController implements DefaultApi{
         // do some magic!
         logger.info("url: "+mode.getUrl());
         City c = GetCitiyFromGazeteer(mode);
+        logger.info("city: "+c.getName());
         String hash =GeohashUtils.encodeLatLon(c.getLat(),c.getLng());
         boolean response=DBOperations.addURL(c,mode.getUrl(),hash);
         return new ResponseEntity<String>(hash, HttpStatus.OK);
@@ -67,19 +69,23 @@ public class DefaultApiController implements DefaultApi{
 
     GeoCitiesClient fallback = (north,south,east,west) -> {
         logger.info("ERROR FEIGN");
-        return new GeoCitiesResult();
+        GeoCitiesResult defaultRes = new GeoCitiesResult();
+        List<City> defList = new ArrayList<City>();
+        defList.add(new City("Default",20,20));
+        defaultRes.setGeonames(defList);
+        return defaultRes;
     };
 
     private City GetCitiyFromGazeteer(Config m){
+        ConfigurationManager.getConfigInstance()
+                .setProperty("hystrix.command.GeoCitiesClient#getCities(Double,Double,Double,Double).execution.isolation.thread.timeoutInMilliseconds", 1000000);
         GeoCitiesClient CityClient = HystrixFeign.builder()
                 .decoder(new JacksonDecoder())
                 .target(GeoCitiesClient.class, "http://api.geonames.org",fallback);
-        ConfigurationManager.getConfigInstance()
-                .setProperty("hystrix.command.GeoCitiesClient#getCities(Double,Double,Double,Double).execution.isolation.thread.timeoutInMilliseconds", 1000000);
         //TODO: Randomize coordinates
         //TODO: Check city in db
         City theCity = new City();
-        if(m.getMode() == 1) {
+        if(m.getMode() == 0) {
             Random random = new Random();
             int max = 70;
             int min = -40;
