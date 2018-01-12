@@ -9,6 +9,14 @@ public class DBUrl {
         this.longitud = longitud;
     }
 
+    public DBUrl() {
+        this.url = "";
+        this.urlAcortada = "";
+        this.clicks = 0;
+        this.latitud = 0;
+        this.longitud = 0;
+    }
+
     public String getUrl() {
         return url;
     }

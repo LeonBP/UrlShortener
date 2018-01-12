@@ -2,6 +2,22 @@ package urlshortener.RedPepper.model;
 
 public class City {
 
+    private String name;
+    private float lng;
+    private float lat;
+
+    public City() {
+        this.name = "";
+        this.lng = 0;
+        this.lat = 0;
+    }
+
+    public City(String name, float lng, float lat) {
+        this.name = name;
+        this.lng = lng;
+        this.lat = lat;
+    }
+
     public String getName() {
 
         return name;
@@ -11,8 +27,6 @@ public class City {
 
         this.name = name;
     }
-
-    private String name;
 
     public float getLng() {
 
@@ -33,9 +47,5 @@ public class City {
 
         this.lat = lat;
     }
-
-    private float lng;
-
-    private float lat;
 
 }

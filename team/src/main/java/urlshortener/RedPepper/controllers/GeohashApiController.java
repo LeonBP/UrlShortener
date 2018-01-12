@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
+import urlshortener.RedPepper.DBConnection.DBOperations;
 import urlshortener.RedPepper.model.Error;
 
 import io.swagger.annotations.*;
@@ -29,8 +30,10 @@ public class GeohashApiController implements GeohashApi {
 
     public RedirectView geohashGet(@ApiParam(value = "geohash that defines the shortened url",required=true ) @PathVariable("geohash") String geohash) {
         logger.info("hash: "+geohash);
+        String urlToRedirect = DBOperations.getURL(geohash);
+        logger.info("url: "+urlToRedirect);
         RedirectView re = new RedirectView();
-        re.setUrl("http://www.google.com");
+        re.setUrl(urlToRedirect);
         return re;
     }
 }

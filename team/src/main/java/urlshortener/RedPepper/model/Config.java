@@ -18,10 +18,13 @@ public class Config   {
   private Integer mode = null;
 
   @JsonProperty("clientIP")
-  private Integer clientIP = null;
+  private String clientIP = null;
 
   @JsonProperty("precision")
   private Integer precision = null;
+
+  @JsonProperty("url")
+  private String url = null;
 
   public String getUrl() {
 
@@ -33,8 +36,6 @@ public class Config   {
     this.url = url;
   }
 
-  @JsonProperty("url")
-  private String url = null;
   public Config mode(Integer mode) {
     this.mode = mode;
     return this;
@@ -57,7 +58,7 @@ public class Config   {
     this.mode = mode;
   }
 
-  public Config clientIP(Integer clientIP) {
+  public Config clientIP(String clientIP) {
     this.clientIP = clientIP;
     return this;
   }
@@ -69,11 +70,11 @@ public class Config   {
   @ApiModelProperty(value = "")
 
 
-  public Integer getClientIP() {
+  public String getClientIP() {
     return clientIP;
   }
 
-  public void setClientIP(Integer clientIP) {
+  public void setClientIP(String clientIP) {
 
     this.clientIP = clientIP;
   }

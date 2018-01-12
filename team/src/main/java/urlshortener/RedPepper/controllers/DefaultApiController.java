@@ -1,9 +1,17 @@
 package urlshortener.RedPepper.controllers;
 
+import com.netflix.config.ConfigurationManager;
+import com.netflix.hystrix.HystrixCommand;
+import com.netflix.hystrix.HystrixCommandGroupKey;
+import com.netflix.hystrix.HystrixCommandKey;
+import com.netflix.hystrix.HystrixCommandProperties;
 import com.spatial4j.core.io.GeohashUtils;
 import feign.Feign;
+import feign.Request;
 import feign.RequestLine;
+import feign.hystrix.HystrixFeign;
 import feign.jackson.JacksonDecoder;
+import org.apache.commons.configuration.AbstractConfiguration;
 import org.apache.http.HttpResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 
 import javax.validation.constraints.*;
@@ -55,14 +64,39 @@ public class DefaultApiController implements DefaultApi{
         GeoCitiesResult getCities (@feign.Param("north") double north,@feign.Param("south") double south
         ,@feign.Param("east") double east,@feign.Param("west") double west);
     }
+
+    GeoCitiesClient fallback = (north,south,east,west) -> {
+        logger.info("ERROR FEIGN");
+        return new GeoCitiesResult();
+    };
+
     private City GetCitiyFromGazeteer(Config m){
-        GeoCitiesClient CityClient = Feign.builder().decoder(new JacksonDecoder()).target(GeoCitiesClient.class,
-                "http://api.geonames.org");
+        GeoCitiesClient CityClient = HystrixFeign.builder()
+                .decoder(new JacksonDecoder())
+                .target(GeoCitiesClient.class, "http://api.geonames.org",fallback);
+        ConfigurationManager.getConfigInstance()
+                .setProperty("hystrix.command.GeoCitiesClient#getCities(Double,Double,Double,Double).execution.isolation.thread.timeoutInMilliseconds", 1000000);
         //TODO: Randomize coordinates
         //TODO: Check city in db
-        GeoCitiesResult apiresults = CityClient.getCities(44.1,-9.9,-22.4,55.2);
-        City theCity = apiresults.getGeonames().get(0);
-        logger.info(theCity.getName());
+        City theCity = new City();
+        if(m.getMode() == 1) {
+            Random random = new Random();
+            int max = 70;
+            int min = -40;
+            double ranN = random.nextInt(max - min + 1) + min;
+            double ranS = ranN - 20;
+            double ranE = random.nextInt(max - min + 1) + min;;
+            double ranW = ranE + 20;
+            logger.info(String.valueOf(ranN));
+            logger.info(String.valueOf(ranS));
+            logger.info(String.valueOf(ranW));
+            logger.info(String.valueOf(ranE));
+            GeoCitiesResult apiresults = CityClient.getCities(ranN, ranS, ranE, ranW);
+            logger.info(String.valueOf(apiresults.getGeonames().size()));
+            theCity = apiresults.getGeonames().get(0);
+            logger.info(theCity.getName());
+        }
         return theCity;
+
     }
 }
