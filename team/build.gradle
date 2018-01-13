@@ -1,3 +1,7 @@
+plugins {
+    id "com.moowork.node" version "1.2.0"
+}
+
 eclipse {
    project {
       name = 'UrlShortener.team'
@@ -31,3 +35,19 @@ dependencies {
     testCompile 'org.springframework.boot:spring-boot-starter-test'
     testCompile 'org.apache.httpcomponents:httpclient'
 }
+
+node {
+
+    // Set the work directory for unpacking node
+    workDir = file("${project.projectDir}/src/main/java/urlshortener/RedPepper/DB/trabajoIngWeb")
+
+    // Set the work directory for NPM
+    npmWorkDir = file("${project.projectDir}/src/main/java/urlshortener/RedPepper/DB/trabajoIngWeb")
+
+    // Set the work directory where node_modules should be located
+    nodeModulesDir = file("${project.projectDir}/src/main/java/urlshortener/RedPepper/DB/trabajoIngWeb")
+}
+
+npm_start
+
+

@@ -33,7 +33,7 @@ public class DefaultTest {
     @Test
     public void thatPostAUrlOnRandomMode()
             throws Exception {
-        String bodyParams = "{\"mode\":\"1\",\"clientIP\":\"90.94.192.43\"," +
+        String bodyParams = "{\"mode\":\"0\",\"clientIP\":\"90.94.192.43\"," +
                 "\"precision\":1,\"url\":\"https://www.google.es/\"}";
         mockMvc.perform(post("/new").with(remoteAddr("90.94.192.43"))
                 .contentType(MediaType.APPLICATION_JSON).content(bodyParams)).andDo(print())
