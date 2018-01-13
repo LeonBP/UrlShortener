@@ -1,4 +1,4 @@
-package urlshortener.RedPepper.controllers;
+package urlshortener.RedPepper.ExceptionHandlers;
 
 //@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2017-11-21T17:50:33.590Z")
 

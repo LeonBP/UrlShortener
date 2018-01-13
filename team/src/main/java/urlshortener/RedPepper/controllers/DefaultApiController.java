@@ -19,6 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 import urlshortener.RedPepper.DBConnection.DBOperations;
+import urlshortener.RedPepper.ExceptionHandlers.NotFoundException;
 import urlshortener.RedPepper.model.City;
 import urlshortener.RedPepper.model.Error;
 import org.springframework.core.io.Resource;
@@ -55,9 +56,12 @@ public class DefaultApiController implements DefaultApi{
     }
 
     public ResponseEntity<String> rootPost(
-        @ApiParam(value = "Configuraion of the geohash generator" ,required=true )  @Valid @RequestBody Config mode) {
+        @ApiParam(value = "Configuraion of the geohash generator" ,required=true )  @Valid @RequestBody Config mode) throws NotFoundException {
         // do some magic!
         logger.info("url: "+mode.getUrl());
+        if(mode.getUrl().equals("ErrorTest")){
+                throw new NotFoundException("test",-1);
+        }
         City c = GetCitiyFromGazeteer(mode);
         logger.info("city: "+c.getName());
         String hash =GeohashUtils.encodeLatLon(c.getLat(),c.getLng());

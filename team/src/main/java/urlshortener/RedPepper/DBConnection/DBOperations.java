@@ -1,9 +1,9 @@
 package urlshortener.RedPepper.DBConnection;
 
-import org.apache.http.HttpResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.client.RestTemplate;
+import urlshortener.RedPepper.ExceptionHandlers.NotFoundException;
 import urlshortener.RedPepper.model.City;
 
 public class DBOperations {
@@ -17,10 +17,14 @@ public class DBOperations {
         return true;
     }
 
-    public static String getURL(String geohash){
+    public static String getURL(String geohash)
+            throws NotFoundException {
         DBUrl[] DBresult;
         RestTemplate getWithGeo = new RestTemplate();
         DBresult= getWithGeo.getForObject("http://localhost:3000/api/urls/"+geohash,DBUrl[].class);
+        if (DBresult.length == 0){
+            throw new NotFoundException("No element in Database",1);
+        }
         return DBresult[0].getUrl();
     }
 

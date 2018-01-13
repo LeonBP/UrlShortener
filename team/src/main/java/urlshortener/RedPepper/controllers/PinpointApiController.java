@@ -65,14 +65,6 @@ public class PinpointApiController implements PinpointApi {
         return apiResults;
     }
 
-    @ExceptionHandler(HttpClientErrorException.class)
-    public ResponseEntity handleBadIp(){
-        Error badIP = new Error();
-        badIP.setCode(404);
-        badIP.setMessage("IP not meant for geolocation");
-        return new ResponseEntity(badIP , HttpStatus.NOT_FOUND);
-    }
-
 }
 
 //TODO: Controller correcto, usando las opciones de RESTController, trabajar JSON como objetos.

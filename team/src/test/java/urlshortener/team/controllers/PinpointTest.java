@@ -10,6 +10,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.RequestPostProcessor;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import urlshortener.RedPepper.ExceptionHandlers.ExceptionController;
 import urlshortener.RedPepper.controllers.PinpointApiController;
 import urlshortener.common.repository.ClickRepository;
 import urlshortener.common.repository.ShortURLRepository;
@@ -30,7 +31,9 @@ public class PinpointTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        this.mockMvc = MockMvcBuilders.standaloneSetup(pinPoint).build();
+        this.mockMvc = MockMvcBuilders.standaloneSetup(pinPoint)
+                .setControllerAdvice(new ExceptionController())
+                .build();
     }
 
     @Test

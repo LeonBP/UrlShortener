@@ -16,11 +16,16 @@ $(document).ready(
                             + msg
                             + "</a></div>");
                     },
-                    error : function() {
+                    error : function(msg) {
                         $("#shortURL").html(
-                                "<div class='alert alert-danger lead'>ERROR</div>");
+                                "<div class='alert alert-danger lead'><p>"
+                                + msg.code
+                                + "\n"
+                                + msg.message
+                                + "</p></div>");
                     }
                 });
+
             });
     });
     
@@ -46,9 +51,13 @@ $(document).ready(
                             + msg.longitude
                             + "</a></div>");
                     },
-                    error : function() {
+                    error : function(msg) {
                         $("#destination").html(
-                                "<div class='alert alert-danger lead'>ERROR</div>");
+                            "<div class='alert alert-danger lead'>"
+                            + msg
+                            + " "
+                            + msg
+                            + "</div>");
                     }
                 });
             });
