@@ -1,5 +1,7 @@
 package urlshortener.RedPepper.controllers;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.netflix.config.ConfigurationManager;
 import com.netflix.hystrix.HystrixCommand;
 import com.netflix.hystrix.HystrixCommandGroupKey;
@@ -28,10 +30,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.*;
 
 
 import javax.validation.constraints.*;
@@ -45,6 +48,7 @@ import urlshortener.RedPepper.model.GeoCitiesResult;
 public class DefaultApiController implements DefaultApi{
 
     private Logger logger = LoggerFactory.getLogger(DefaultApiController.class);
+    private GeoCitiesResult localCities = GetCityFromLocal();
     public ResponseEntity<Resource> rootGet() {
         // do some magic!
         return new ResponseEntity<Resource>(HttpStatus.OK);
@@ -57,7 +61,7 @@ public class DefaultApiController implements DefaultApi{
         City c = GetCitiyFromGazeteer(mode);
         logger.info("city: "+c.getName());
         String hash =GeohashUtils.encodeLatLon(c.getLat(),c.getLng());
-        boolean response=DBOperations.addURL(c,mode.getUrl(),hash);
+//        boolean response=DBOperations.addURL(c,mode.getUrl(),hash);
         return new ResponseEntity<String>(hash, HttpStatus.OK);
     }
 
@@ -69,40 +73,54 @@ public class DefaultApiController implements DefaultApi{
 
     GeoCitiesClient fallback = (north,south,east,west) -> {
         logger.info("ERROR FEIGN");
-        GeoCitiesResult defaultRes = new GeoCitiesResult();
-        List<City> defList = new ArrayList<City>();
-        defList.add(new City("Default",20,20));
-        defaultRes.setGeonames(defList);
-        return defaultRes;
+        return localCities;
     };
 
     private City GetCitiyFromGazeteer(Config m){
         ConfigurationManager.getConfigInstance()
-                .setProperty("hystrix.command.GeoCitiesClient#getCities(Double,Double,Double,Double).execution.isolation.thread.timeoutInMilliseconds", 1000000);
+                .setProperty("hystrix.command.GeoCitiesClient#getCities(Double,Double,Double,Double).execution.isolation.thread.timeoutInMilliseconds", 4000);
         GeoCitiesClient CityClient = HystrixFeign.builder()
                 .decoder(new JacksonDecoder())
                 .target(GeoCitiesClient.class, "http://api.geonames.org",fallback);
-        //TODO: Randomize coordinates
         //TODO: Check city in db
         City theCity = new City();
         if(m.getMode() == 0) {
-            Random random = new Random();
-            int max = 70;
-            int min = -40;
-            double ranN = random.nextInt(max - min + 1) + min;
+            Random random = new Random(System.currentTimeMillis());
+            int maxLat = 70;
+            int minLat = -40;
+            int maxLong = 156;
+            int minLong = -125;
+            double ranN = random.nextInt(maxLat - minLat + 1) + minLat;
             double ranS = ranN - 20;
-            double ranE = random.nextInt(max - min + 1) + min;;
-            double ranW = ranE + 20;
+            double ranW = random.nextInt(maxLong - minLong + 1) + minLong;
+            double ranE = ranW + 20;
             logger.info(String.valueOf(ranN));
             logger.info(String.valueOf(ranS));
             logger.info(String.valueOf(ranW));
             logger.info(String.valueOf(ranE));
             GeoCitiesResult apiresults = CityClient.getCities(ranN, ranS, ranE, ranW);
             logger.info(String.valueOf(apiresults.getGeonames().size()));
-            theCity = apiresults.getGeonames().get(0);
+            int randomPos = random.nextInt(apiresults.getGeonames().size());
+            theCity = apiresults.getGeonames().get(randomPos);
             logger.info(theCity.getName());
         }
         return theCity;
 
+    }
+
+    private GeoCitiesResult GetCityFromLocal(){
+        ObjectMapper mapper = new ObjectMapper();
+        logger.info("path: "+DefaultApiController.class.getName());
+        InputStream jsonFile = DefaultApiController.class.getResourceAsStream("/static_cities.json");
+        try {
+            GeoCitiesResult localList = mapper.readValue(jsonFile,GeoCitiesResult.class);
+            logger.info("File load success");
+            logger.info(String.valueOf(localList.getGeonames().size()));
+            return localList;
+        } catch (IOException e) {
+            e.printStackTrace();
+            logger.info("File load failed");
+            return new GeoCitiesResult();
+        }
     }
 }
