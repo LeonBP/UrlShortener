@@ -78,3 +78,12 @@ exports.delete = function(req, res)
         res.json({ message: 'Successfully deleted' });
     });
 };
+
+//GET - Return a register with specified geohash
+exports.findHash = function(req, res) {
+    UrlModel.getHash(req.params.hash, function(err, client) {
+        if(err) return res.send(500, err.message);
+        console.log('GET /hash/' + req.params.hash);
+        res.status(200).jsonp(client);
+    });
+};
