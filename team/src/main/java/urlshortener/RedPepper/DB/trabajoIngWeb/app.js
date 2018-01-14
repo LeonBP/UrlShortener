@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
 
+//express
 var app = express();
 
 // view engine setup
@@ -21,16 +22,19 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+//index
 app.use('/', index);
 //app.use('/partidos', partidos);
 var UrlsCtrl = require('./controllers/urls');
 // API routes
 var api = express.Router();
 
+//route for urls
 api.route('/urls')
     .get(UrlsCtrl.findAll)
     .post(UrlsCtrl.add);
 
+//route for urls with the id
 api.route('/urls/:id')
     .get(UrlsCtrl.findByGeohash)
     .put(UrlsCtrl.update)
