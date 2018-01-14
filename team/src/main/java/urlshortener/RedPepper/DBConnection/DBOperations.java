@@ -9,12 +9,15 @@ import urlshortener.RedPepper.model.City;
 
 public class DBOperations {
 
+    //to check if the city is repeated
     private static Checker checker;
 
     public static boolean addURL(City newCity,String url,String geohash){
         DBUrl newUrl = new DBUrl(url,geohash,newCity.getLat(),newCity.getLng());
         RestTemplate add = new RestTemplate();
         try {
+            //here we should check if
+            //the hash is repeated
                 ResponseEntity response = add.postForEntity("http://localhost:3000/api/urls/", newUrl, DBUrl.class);
         }catch (HttpMessageNotReadableException e){}
         return true;
