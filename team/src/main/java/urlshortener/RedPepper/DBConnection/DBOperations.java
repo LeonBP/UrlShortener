@@ -15,12 +15,7 @@ public class DBOperations {
         DBUrl newUrl = new DBUrl(url,geohash,newCity.getLat(),newCity.getLng());
         RestTemplate add = new RestTemplate();
         try {
-            if (!checker.estaRepetidaEnBD(geohash)) {
                 ResponseEntity response = add.postForEntity("http://localhost:3000/api/urls/", newUrl, DBUrl.class);
-            }
-            else {
-                return false;
-            }
         }catch (HttpMessageNotReadableException e){}
         return true;
     }
