@@ -1,8 +1,11 @@
 var UrlModel = require('../models/urls');
 
 //GET - Return all registers
-exports.findAll = function(req, res) {
-    UrlModel.getUrls(function(err, clients) {
+//devolver todas las urls
+exports.findAll = function(req, res)
+{
+    UrlModel.getUrls(function(err, clients)
+    {
         if(err) return res.send(500, err.message);
         console.log('GET /urls')
         res.status(200).jsonp(clients);
@@ -10,8 +13,11 @@ exports.findAll = function(req, res) {
 };
 
 //GET - Return a register with specified geohash
-exports.findByGeohash = function(req, res) {
-    UrlModel.getUrlGeohash(req.params.id, function(err, client) {
+//devolver una url determinada
+exports.findByGeohash = function(req, res)
+{
+    UrlModel.getUrlGeohash(req.params.id, function(err, client)
+    {
         if(err) return res.send(500, err.message);
         console.log('GET /urls/' + req.params.id);
         res.status(200).jsonp(client);
@@ -19,10 +25,13 @@ exports.findByGeohash = function(req, res) {
 };
 
 //POST - Insert a new register
-exports.add = function(req, res) {
+//insertar una url
+exports.add = function(req, res)
+{
     console.log('POST');
     console.log(req.body);
-    var url = {
+    var url =
+    {
         id: req.body.id,
         url: req.body.url,
         urlAcortada: req.body.urlAcortada,
@@ -30,15 +39,18 @@ exports.add = function(req, res) {
         latitud: req.body.latitud,
         longitud: req.body.longitud
     };
-    UrlModel.insertUrl(url, function(err, client) {
+    UrlModel.insertUrl(url, function(err, client)
+    {
         if(err) return res.send(500, err.message);
         res.status(200).jsonp(client);
     });
 };
 
 //PUT - Update a register already exists
+//editar una url determinada
 exports.update = function(req, res) {
-    UrlModel.getUrlGeohash(req.params.id, function(err, url) {
+    UrlModel.getUrlGeohash(req.params.id, function(err, url)
+    {
         console.log(req.body);
         var url = {
             id: req.body.id,
@@ -48,7 +60,8 @@ exports.update = function(req, res) {
             latitud: req.body.latitud,
             longitud: req.body.longitud
         };
-        UrlModel.updateUrl(url, function(err) {
+        UrlModel.updateUrl(url, function(err)
+        {
             if(err) return res.send(500, err.message);
             res.status(200).jsonp(url);
         });
@@ -56,8 +69,11 @@ exports.update = function(req, res) {
 };
 
 //DELETE - Delete a register with specified ID
-exports.delete = function(req, res) {
-    UrlModel.deleteUrl(req.params.id, function(err, url) {
+//borrar una url determinada
+exports.delete = function(req, res)
+{
+    UrlModel.deleteUrl(req.params.id, function(err, url)
+    {
         if(err) return res.send(500, err.message);
         res.json({ message: 'Successfully deleted' });
     });
