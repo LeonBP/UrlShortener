@@ -7,12 +7,10 @@ import feign.jackson.JacksonDecoder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpClientErrorException;
-import urlshortener.RedPepper.model.Error;
+import urlshortener.RedPepper.ExceptionHandlers.ApiException;
 import urlshortener.RedPepper.model.IpGeoResults;
 import urlshortener.RedPepper.model.PinPointParameters;
 
@@ -24,7 +22,8 @@ import java.util.Map;
 @RestController
 public class PinpointApiController implements PinpointApi {
     private static final Logger logger = LoggerFactory.getLogger(PinpointApiController.class);
-    public ResponseEntity pinpointGet(HttpServletRequest request, @RequestBody PinPointParameters jsonParam) {
+    public IpGeoResults pinpointGet(HttpServletRequest request, @RequestBody PinPointParameters jsonParam)
+            throws ApiException {
 
         logger.info("Recibido: "+jsonParam);
         String ip = request.getRemoteAddr();
@@ -34,9 +33,7 @@ public class PinpointApiController implements PinpointApi {
         IpGeoResults location = getLocation(ip);
         logger.info(location.toString());
 
-        ResponseEntity response = new ResponseEntity(location , HttpStatus.OK);
-
-        return response;
+        return location;
     }
 
 //    Cuerpo final de la respuesta en json
@@ -51,9 +48,14 @@ public class PinpointApiController implements PinpointApi {
     }
     private interface IpGeoClient{
         @RequestLine("GET /{ip}")
-        IpGeoResults IpLocalization (@feign.Param("ip") String ip);
+        IpGeoResults IpLocalization (@feign.Param("ip") String ip) throws ApiException;
     }
-    private IpGeoResults getLocation(String ip) throws HttpClientErrorException{
+
+    IpGeoClient fallback = (ip) -> {
+        throw new ApiException(2,"Ip geolocation api conection error");
+    };
+
+    private IpGeoResults getLocation(String ip) throws HttpClientErrorException, ApiException {
 
         IpGeoClient ipClient = Feign.builder().decoder(new JacksonDecoder()).target(IpGeoClient.class,
                 "https://freegeoip.net/json/");
@@ -63,14 +65,6 @@ public class PinpointApiController implements PinpointApi {
             throw new HttpClientErrorException(HttpStatus.NOT_FOUND);
         }
         return apiResults;
-    }
-
-    @ExceptionHandler(HttpClientErrorException.class)
-    public ResponseEntity handleBadIp(){
-        Error badIP = new Error();
-        badIP.setCode(404);
-        badIP.setMessage("IP not meant for geolocation");
-        return new ResponseEntity(badIP , HttpStatus.NOT_FOUND);
     }
 
 }

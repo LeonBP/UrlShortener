@@ -7,12 +7,12 @@ import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.cloud.netflix.feign.EnableFeignClients;
 import org.springframework.context.annotation.ComponentScan;
 
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
 @EnableSwagger2
 @EnableFeignClients
-//@ComponentScan(basePackages = {"urlshortener.RedPepper" })
 public class Application extends SpringBootServletInitializer {
 
 	public static void main(String[] args) throws Exception {

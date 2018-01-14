@@ -11,7 +11,7 @@ import javax.validation.constraints.*;
 /**
  * Config
  */
-//@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2017-11-21T17:50:33.590Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2017-11-21T17:50:33.590Z")
 
 public class Config   {
   @JsonProperty("mode")

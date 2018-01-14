@@ -10,6 +10,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.RequestPostProcessor;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import urlshortener.RedPepper.ExceptionHandlers.ExceptionController;
 import urlshortener.RedPepper.controllers.PinpointApiController;
 import urlshortener.common.repository.ClickRepository;
 import urlshortener.common.repository.ShortURLRepository;
@@ -30,7 +31,9 @@ public class PinpointTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        this.mockMvc = MockMvcBuilders.standaloneSetup(pinPoint).build();
+        this.mockMvc = MockMvcBuilders.standaloneSetup(pinPoint)
+                .setControllerAdvice(new ExceptionController())
+                .build();
     }
 
     @Test
@@ -41,7 +44,8 @@ public class PinpointTest {
         String bodyParams = "{\"redirect\": false,\"radio\": 0,\"resultNumber\": 1}";
         mockMvc.perform(post("/pinpoint").with(remoteAddr("90.94.192.43"))
                 .contentType(MediaType.APPLICATION_JSON).content(bodyParams)).andDo(print())
-                .andExpect(status().isOk()).andExpect(content().string(expectedJson));
+                .andExpect(status().isOk())
+                .andExpect(content().string(expectedJson));
 
     }
 
@@ -50,7 +54,8 @@ public class PinpointTest {
             throws Exception{
         String bodyParams = "{\"redirect\": false,\"radio\": 0,\"resultNumber\": 1,\"cosa\":\"kek\"}";
         mockMvc.perform(post("/pinpoint").with(remoteAddr("0.0.0.1"))
-                .contentType(MediaType.APPLICATION_JSON).content(bodyParams)).andExpect(status().isNotFound());
+                .contentType(MediaType.APPLICATION_JSON).content(bodyParams))
+                .andExpect(status().isForbidden());
     }
 
     private static RequestPostProcessor remoteAddr(final String remoteAddr) {
