@@ -23,13 +23,13 @@ public class ExceptionController {
     public @ResponseBody Error handleBadIp(HttpServletResponse response) {
         response.setStatus(HttpStatus.FORBIDDEN.value());
         Error badIP = new Error();
-        badIP.setCode(404);
+        badIP.setCode(403);
         badIP.setMessage("IP not meant for geolocation");
         return badIP;
     }
 
     @ExceptionHandler(NotFoundException.class)
-    public @ResponseBody Error handleNoRedirect(NotFoundException e,HttpServletResponse response) {
+    public @ResponseBody Error handleNotFound(NotFoundException e,HttpServletResponse response) {
         if (e.getCode() == 1) {
             response.setStatus(HttpStatus.NOT_FOUND.value());
             Error noRedirect = new Error();
@@ -49,5 +49,17 @@ public class ExceptionController {
             unknown.setMessage("Unexpected error");
             return unknown;
         }
+    }
+
+    @ExceptionHandler(ApiException.class)
+    public @ResponseBody Error handleApiExceptions(ApiException e,HttpServletResponse response){
+
+        response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+
+        Error serverError = new Error();
+        serverError.setCode(500);
+        serverError.setMessage("Internal error");
+
+        return serverError;
     }
 }

@@ -54,9 +54,9 @@ $(document).ready(
                     error : function(msg) {
                         $("#destination").html(
                             "<div class='alert alert-danger lead'>"
-                            + msg
+                            + msg.code
                             + " "
-                            + msg
+                            + msg.message
                             + "</div>");
                     }
                 });

@@ -29,20 +29,14 @@ import javax.validation.Valid;
 @Api(value = "default", description = "the default API")
 public interface DefaultApi {
 
-//    @ApiOperation(value = "", notes = "Gets the .jsp file with the associated JavaScript that represents the UI of the web service. ", response = Resource.class, tags={ "Basic services", })
-//    @ApiResponses(value = {
-//        @ApiResponse(code = 200, message = "Successful response", response = Resource.class),
-//        @ApiResponse(code = 200, message = "Unexpected error", response = Error.class) })
-//
-//    @RequestMapping(value = "/",
-//        method = RequestMethod.GET)
-//    ResponseEntity<Resource> rootGet();
-
-
-    @ApiOperation(value = "", notes = "Post an URL to be validated and shortened. ", response = String.class, tags={ "Basic services", })
+    @ApiOperation(value = "", code = 201,
+            notes = "Post an URL to be validated and shortened. ",
+            response = String.class,
+            tags={ "Basic services", })
     @ApiResponses(value = {
         @ApiResponse(code = 201, message = "URL shortened correctly and stored in db.", response = String.class),
-        @ApiResponse(code = 403, message = "URL not valid.", response = Error.class) })
+        @ApiResponse(code = 403, message = "Incorrect Parameters.", response = Error.class),
+        @ApiResponse(code = 404, message = "URL not valid.", response = Error.class)})
 
     @RequestMapping(value = "/new",
         method = RequestMethod.POST)

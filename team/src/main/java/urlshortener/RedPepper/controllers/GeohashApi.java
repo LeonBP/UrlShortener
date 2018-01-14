@@ -19,11 +19,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Api(value = "{geohash}", description = "the {geohash} API")
 public interface GeohashApi {
 
-    @ApiOperation(value = "", notes = "Redirects de {geohash} shortened url to the original url. ", response = String.class, tags={ "Basic services", })
+    @ApiOperation(value = "",
+            code = 300,
+            notes = "Redirects de {geohash} shortened url to the original url. ",
+            tags={ "Basic services"})
     @ApiResponses(value = {
-        @ApiResponse(code = 200, message = "Original URL retrieved successfully", response = String.class),
-        @ApiResponse(code = 404, message = "The {geohash} shortened url is not in the db", response = Error.class),
-        @ApiResponse(code = 200, message = "Unexpected error", response = Error.class) })
+        @ApiResponse(code = 300, message = "Original URL retrieved successfully", response = RedirectView.class),
+        @ApiResponse(code = 404, message = "The {geohash} shortened url is not in the db", response = Error.class)})
 
     @RequestMapping(value = "/{geohash:(?!index|swagger-ui|pinpoint|new).*}",
         method = RequestMethod.GET)
