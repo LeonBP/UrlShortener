@@ -6,31 +6,29 @@
 package urlshortener.RedPepper.controllers;
 
 
-import io.swagger.annotations.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.multipart.MultipartFile;
+import urlshortener.RedPepper.ExceptionHandlers.ApiException;
 
-import java.util.List;
-import javax.validation.constraints.*;
-import javax.validation.Valid;
-//@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2017-11-21T17:50:33.590Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2017-11-21T17:50:33.590Z")
 
 @Api(value = "QR", description = "the QR API")
 public interface QRApi {
 
-    @ApiOperation(value = "", notes = "Obtain the QR code associated with the shortened URL. ", response = Void.class, tags={ "Added funcionality", })
-    @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "OK", response = Void.class) })
-    
+    @ApiOperation(value = "", notes = "Obtain the QR code associated with the shortened URL. ", response = byte[].class, tags = {"Added funcionality",})
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = byte[].class),
+            @ApiResponse(code = 500, message = "Error creating QR", response = Error.class)})
+
     @RequestMapping(value = "/QR",
-        method = RequestMethod.GET)
-    ResponseEntity<Void> qRGet(@RequestParam("url") String url);
+            method = RequestMethod.GET, produces = MediaType.IMAGE_PNG_VALUE)
+    ResponseEntity<byte[]> qRGet(@RequestParam("url") String url) throws ApiException;
 
 }

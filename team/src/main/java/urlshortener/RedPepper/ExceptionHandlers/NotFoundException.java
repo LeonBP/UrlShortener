@@ -4,7 +4,8 @@ package urlshortener.RedPepper.ExceptionHandlers;
 
 public class NotFoundException extends ApiException {
     private int code;
-    public NotFoundException (String msg,int code) {
+
+    public NotFoundException(String msg, int code) {
         super(code, msg);
         this.code = code;
     }

@@ -1,20 +1,25 @@
 package urlshortener.RedPepper.controllers;
 
 
-import java.io.*;
-
-import org.slf4j.*;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.client.j2se.MatrixToImageConfig;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.MediaType;
-import org.springframework.scheduling.annotation.*;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.util.concurrent.ListenableFuture;
 
-import com.google.zxing.*;
-import com.google.zxing.client.j2se.*;
-import com.google.zxing.common.BitMatrix;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 @Service
 @Cacheable(cacheNames = "qr-code-cache", sync = true)

@@ -4,8 +4,8 @@ public class PinpointResult extends IpGeoResults {
     private String hash;
     private String url;
 
-    public PinpointResult(String ip, String city, Double latitude, Double longitude,String hash,String url) {
-        super(ip,city,latitude,longitude);
+    public PinpointResult(String ip, String city, Double latitude, Double longitude, String hash, String url) {
+        super(ip, city, latitude, longitude);
         this.hash = hash;
         this.url = url;
     }

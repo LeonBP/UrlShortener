@@ -5,14 +5,13 @@
  */
 package urlshortener.RedPepper.controllers;
 
-import org.springframework.web.servlet.view.RedirectView;
-import urlshortener.RedPepper.ExceptionHandlers.NotFoundException;
-import urlshortener.RedPepper.model.Error;
-
 import io.swagger.annotations.*;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.view.RedirectView;
+import urlshortener.RedPepper.ExceptionHandlers.NotFoundException;
+import urlshortener.RedPepper.model.Error;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2017-11-21T17:50:33.590Z")
 
@@ -22,14 +21,14 @@ public interface GeohashApi {
     @ApiOperation(value = "",
             code = 300,
             notes = "Redirects de {geohash} shortened url to the original url. ",
-            tags={ "Basic services"})
+            tags = {"Basic services"})
     @ApiResponses(value = {
-        @ApiResponse(code = 300, message = "Original URL retrieved successfully", response = RedirectView.class),
-        @ApiResponse(code = 404, message = "The {geohash} shortened url is not in the db", response = Error.class)})
+            @ApiResponse(code = 300, message = "Original URL retrieved successfully", response = RedirectView.class),
+            @ApiResponse(code = 404, message = "The {geohash} shortened url is not in the db", response = Error.class)})
 
     @RequestMapping(value = "/{geohash:(?!index|swagger-ui|pinpoint|new).*}",
-        method = RequestMethod.GET)
-    RedirectView geohashGet(@ApiParam(value = "geohash that defines the shortened url",required=true )
+            method = RequestMethod.GET)
+    RedirectView geohashGet(@ApiParam(value = "geohash that defines the shortened url", required = true)
                             @PathVariable("geohash") String geohash) throws NotFoundException;
 
 }

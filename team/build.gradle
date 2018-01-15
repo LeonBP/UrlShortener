@@ -3,9 +3,9 @@ plugins {
 }
 
 eclipse {
-   project {
-      name = 'UrlShortener.team'
-   }
+    project {
+        name = 'UrlShortener.team'
+    }
 }
 
 dependencies {
@@ -54,7 +54,7 @@ node {
     nodeModulesDir = file("${project.projectDir}/src/main/java/urlshortener/RedPepper/DB/trabajoIngWeb")
 }
 
-npm_start{
+npm_start {
     group = 'node'
 }
 

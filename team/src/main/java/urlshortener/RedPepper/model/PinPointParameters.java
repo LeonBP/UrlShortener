@@ -8,7 +8,7 @@ public class PinPointParameters {
 
     private int resultNumber;
 
-    public void setRedirect(boolean redirect){
+    public void setRedirect(boolean redirect) {
 
         this.redirect = redirect;
     }

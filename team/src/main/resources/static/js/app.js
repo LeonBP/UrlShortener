@@ -53,6 +53,10 @@ $(document).ready(
                             + msg.latitude
                             + " "
                             + msg.longitude
+                            + " "
+                            + msg.hash
+                            + " "
+                            + msg.url
                             + "</a></div>");
                     },
                     error : function(msg) {

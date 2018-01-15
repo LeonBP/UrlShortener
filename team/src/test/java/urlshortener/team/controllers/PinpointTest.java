@@ -4,7 +4,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -15,10 +14,7 @@ import urlshortener.RedPepper.DBConnection.DBOperations;
 import urlshortener.RedPepper.ExceptionHandlers.ExceptionController;
 import urlshortener.RedPepper.controllers.PinpointApiController;
 import urlshortener.RedPepper.model.City;
-import urlshortener.common.repository.ClickRepository;
-import urlshortener.common.repository.ShortURLRepository;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -37,13 +33,16 @@ public class PinpointTest {
         this.mockMvc = MockMvcBuilders.standaloneSetup(pinPoint)
                 .setControllerAdvice(new ExceptionController())
                 .build();
-        City ExampleCity = new City("ExampleZaragoza",0,0);
-        DBOperations.addURL(ExampleCity,"http://example.org/","ezrkup30hkr");
+        City ExampleCity = new City("ExampleZaragoza", 0, 0);
+        DBOperations.deleteByHash("ezrkup30hkzz");
+        DBOperations.addURL(ExampleCity, "http://example.org/", "ezrkup30hkr");
     }
+
     @After
-    public void finish(){
+    public void finish() {
         DBOperations.deleteByHash("ezrkup30hkr");
     }
+
     @Test
     public void thatGetsALocationOnCorrectIP()
             throws Exception {
@@ -59,7 +58,7 @@ public class PinpointTest {
 
     @Test
     public void thatBadIpGetsError404()
-            throws Exception{
+            throws Exception {
         String bodyParams = "{\"redirect\": false,\"radio\": 0,\"resultNumber\": 1,\"cosa\":\"kek\"}";
         mockMvc.perform(post("/pinpoint").with(remoteAddr("0.0.0.1"))
                 .contentType(MediaType.APPLICATION_JSON).content(bodyParams))

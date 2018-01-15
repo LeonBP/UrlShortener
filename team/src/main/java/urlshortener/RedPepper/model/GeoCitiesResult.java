@@ -24,15 +24,16 @@ public class GeoCitiesResult {
 
     List<CityDMS> data = new ArrayList<>();
 
-    public void deleteHash(String hash){
+    public void deleteHash(String hash) {
         this.geonames.removeIf(city -> city.getHash() == hash);
     }
 
-    public void transform(List<CityDMS> list){
-        for(CityDMS DMS : list){
+    public void transform(List<CityDMS> list) {
+        for (CityDMS DMS : list) {
             try {
-                geonames.add(new City(DMS.getName(),DMS.getLon(),DMS.getLat()));
-            } catch (NumberFormatException e){}
+                geonames.add(new City(DMS.getName(), DMS.getLon(), DMS.getLat()));
+            } catch (NumberFormatException e) {
+            }
 
         }
     }
