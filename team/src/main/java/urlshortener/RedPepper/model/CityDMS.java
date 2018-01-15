@@ -1,7 +1,5 @@
 package urlshortener.RedPepper.model;
 
-import com.spatial4j.core.io.GeohashUtils;
-
 public class CityDMS {
 
     private String name;

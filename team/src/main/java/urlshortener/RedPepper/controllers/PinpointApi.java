@@ -6,13 +6,15 @@
 package urlshortener.RedPepper.controllers;
 
 
-import io.swagger.annotations.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import urlshortener.RedPepper.ExceptionHandlers.ApiException;
 import urlshortener.RedPepper.model.Error;
-import urlshortener.RedPepper.model.IpGeoResults;
 import urlshortener.RedPepper.model.PinPointParameters;
 import urlshortener.RedPepper.model.PinpointResult;
 
@@ -25,14 +27,14 @@ public interface PinpointApi {
 
     @ApiOperation(value = "",
             notes = "Obtain the URL(s) near the client location. ",
-            response = IpGeoResults.class,
-            tags={ "Added funcionality", })
-    @ApiResponses(value = { 
-        @ApiResponse(code = 500, message = "Internal error (external api connection)", response = Error.class),
-        @ApiResponse(code = 403, message = "Can't geolocate IP", response = Error.class)})
-    
+            response = PinpointResult.class,
+            tags = {"Added funcionality",})
+    @ApiResponses(value = {
+            @ApiResponse(code = 500, message = "Internal error (external api connection)", response = Error.class),
+            @ApiResponse(code = 403, message = "Can't geolocate IP", response = Error.class)})
+
     @RequestMapping(value = "/pinpoint",
-        method = RequestMethod.POST,consumes="application/json", produces = "application/json")
+            method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     PinpointResult pinpointGet(HttpServletRequest request, @RequestBody PinPointParameters jsonParam) throws ApiException;
 
 }

@@ -1,11 +1,6 @@
 package urlshortener.RedPepper.model;
 
 import com.spatial4j.core.io.GeohashUtils;
-import com.sun.javafx.util.Utils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.slf4j.helpers.Util;
-import urlshortener.RedPepper.controllers.DefaultApiController;
 
 public class City {
 
@@ -69,19 +64,19 @@ public class City {
         return hash;
     }
 
-    private float parse(String s) throws NumberFormatException{
+    private float parse(String s) throws NumberFormatException {
         String[] first = s.split("°");
         int grade = Integer.parseInt(first[0]);
         int minute = 0;
         String[] second = first[1].split("′");
-        if(second[0].equals("W") || second[0].equals("E")
-                || second[0].equals("S")  || second[0].equals("N") ) {
-            if(second[0].equals("S") || second[0].equals("W")){
-                return  0-grade;
-            }else {
+        if (second[0].equals("W") || second[0].equals("E")
+                || second[0].equals("S") || second[0].equals("N")) {
+            if (second[0].equals("S") || second[0].equals("W")) {
+                return 0 - grade;
+            } else {
                 return grade;
             }
-        }else {
+        } else {
             minute = Integer.parseInt(second[0]);
             float result = grade + minute / 60;
             if (second[1].equals("S") || second[1].equals("W")) {

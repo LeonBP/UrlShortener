@@ -3,14 +3,9 @@ package urlshortener.RedPepper.ExceptionHandlers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import urlshortener.RedPepper.ExceptionHandlers.NotFoundException;
-import urlshortener.RedPepper.controllers.PinpointApiController;
 import urlshortener.RedPepper.model.Error;
 
 import javax.servlet.http.HttpServletResponse;
@@ -20,8 +15,9 @@ public class ExceptionController {
     private static final Logger logger = LoggerFactory.getLogger(ExceptionController.class);
 
     @ExceptionHandler(NotFoundException.class)
-    public @ResponseBody Error handleNotFound(NotFoundException e,HttpServletResponse response) {
-        switch (e.getCode()){
+    public @ResponseBody
+    Error handleNotFound(NotFoundException e, HttpServletResponse response) {
+        switch (e.getCode()) {
             case 1:
                 response.setStatus(HttpStatus.NOT_FOUND.value());
                 Error noRedirect = new Error();
@@ -56,11 +52,12 @@ public class ExceptionController {
     }
 
     @ExceptionHandler(ApiException.class)
-    public @ResponseBody Error handleApiExceptions(ApiException e,HttpServletResponse response){
+    public @ResponseBody
+    Error handleApiExceptions(ApiException e, HttpServletResponse response) {
 
         response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
         Error serverError = new Error();
-        switch (e.getCode()){
+        switch (e.getCode()) {
             case 1:
                 serverError.setMessage("No nearby city available");
                 serverError.setCode(500);
@@ -73,6 +70,9 @@ public class ExceptionController {
                 serverError.setMessage("External API error");
                 serverError.setCode(500);
                 break;
+            case 4:
+                serverError.setMessage("Error creating QR");
+                serverError.setCode(500);
             default:
                 serverError.setCode(500);
                 serverError.setMessage("Internal error");

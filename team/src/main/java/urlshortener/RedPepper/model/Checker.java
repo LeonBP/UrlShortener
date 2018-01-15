@@ -2,7 +2,6 @@ package urlshortener.RedPepper.model;
 
 import org.springframework.web.client.RestTemplate;
 import urlshortener.RedPepper.DBConnection.DBUrl;
-import urlshortener.RedPepper.ExceptionHandlers.NotFoundException;
 
 /**
  * Created by ivansantamaria on 19/12/17.

@@ -5,27 +5,18 @@
  */
 package urlshortener.RedPepper.controllers;
 
-import urlshortener.RedPepper.ExceptionHandlers.ApiException;
-import urlshortener.RedPepper.ExceptionHandlers.NotFoundException;
-import urlshortener.RedPepper.model.Error;
-import org.springframework.core.io.Resource;
-
 import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.multipart.MultipartFile;
+import urlshortener.RedPepper.ExceptionHandlers.ApiException;
 import urlshortener.RedPepper.model.Config;
+import urlshortener.RedPepper.model.Error;
 
-import java.util.List;
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.constraints.*;
 import javax.validation.Valid;
+
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2017-11-21T17:50:33.590Z")
 
 @Api(value = "default", description = "the default API")
@@ -34,16 +25,16 @@ public interface DefaultApi {
     @ApiOperation(value = "", code = 201,
             notes = "Post an URL to be validated and shortened. ",
             response = String.class,
-            tags={ "Basic services", })
+            tags = {"Basic services",})
     @ApiResponses(value = {
-        @ApiResponse(code = 201, message = "URL shortened correctly and stored in db.", response = String.class),
-        @ApiResponse(code = 403, message = "Incorrect Parameters.", response = Error.class),
-        @ApiResponse(code = 404, message = "URL not valid.", response = Error.class)})
+            @ApiResponse(code = 201, message = "URL shortened correctly and stored in db.", response = String.class),
+            @ApiResponse(code = 403, message = "Incorrect Parameters.", response = Error.class),
+            @ApiResponse(code = 404, message = "URL not valid.", response = Error.class)})
 
     @RequestMapping(value = "/new",
-        method = RequestMethod.POST)
+            method = RequestMethod.POST)
     ResponseEntity rootPost(HttpServletRequest request,
-                            @ApiParam(value = "Configuraion of the geohash generator" ,required=true )
+                            @ApiParam(value = "Configuraion of the geohash generator", required = true)
                             @Valid @RequestBody Config mode)
             throws ApiException;
 
