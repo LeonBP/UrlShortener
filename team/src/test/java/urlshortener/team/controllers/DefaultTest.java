@@ -1,6 +1,7 @@
 package urlshortener.team.controllers;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
@@ -34,6 +35,29 @@ public class DefaultTest {
     public void thatPostAUrlOnRandomMode()
             throws Exception {
         String bodyParams = "{\"mode\":\"0\",\"clientIP\":\"90.94.192.43\"," +
+                "\"precision\":1,\"url\":\"https://www.google.es/\"}";
+        mockMvc.perform(post("/new").with(remoteAddr("90.94.192.43"))
+                .contentType(MediaType.APPLICATION_JSON).content(bodyParams)).andDo(print())
+                .andExpect(status().isCreated());
+
+    }
+
+    @Test
+    public void thatPostAUrlOnUserMode()
+            throws Exception {
+        String bodyParams = "{\"mode\":\"1\",\"clientIP\":\"90.94.192.43\"," +
+                "\"precision\":1,\"url\":\"https://www.google.es/\"}";
+        mockMvc.perform(post("/new").with(remoteAddr("90.94.192.43"))
+                .contentType(MediaType.APPLICATION_JSON).content(bodyParams)).andDo(print())
+                .andExpect(status().isCreated());
+
+    }
+
+    @Ignore
+    @Test
+    public void thatPostAUrlOnHostMode()
+            throws Exception {
+        String bodyParams = "{\"mode\":\"2\",\"clientIP\":\"90.94.192.43\"," +
                 "\"precision\":1,\"url\":\"https://www.google.es/\"}";
         mockMvc.perform(post("/new").with(remoteAddr("90.94.192.43"))
                 .contentType(MediaType.APPLICATION_JSON).content(bodyParams)).andDo(print())

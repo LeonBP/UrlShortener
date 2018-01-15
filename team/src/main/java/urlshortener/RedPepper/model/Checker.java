@@ -16,19 +16,8 @@ public class Checker {
         this.url = url;
     }
 
-    public IpGeoResults cityUrl(String url) {
 
-        IpGeoResults ipGeoResults = new IpGeoResults();
-
-        ipGeoResults.setCity("zaragoza");
-
-        ipGeoResults.setLatitude(41.39);
-
-        ipGeoResults.setLongitude(0.52);
-        return ipGeoResults;
-    }
-
-    public boolean estaRepetidaEnBD (String geohash) {
+    public static boolean estaRepetidaEnBD (String geohash) {
         DBUrl[] DBresult;
         RestTemplate getWithGeo = new RestTemplate();
         //petition to check if the hash is used
