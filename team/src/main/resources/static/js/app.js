@@ -11,8 +11,12 @@ $(document).ready(
                     success : function(msg) {
                         $("#shortURL").html(
                             "<div class='alert alert-success lead'><a target='_blank' href='"
+                            + location.host
+                            +"/"
                             + msg
                             + "'>"
+                            + location.host
+                            +"/"
                             + msg
                             + "</a></div>");
                     },

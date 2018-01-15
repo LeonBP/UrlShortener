@@ -155,5 +155,25 @@ urlModel.deleteUrl = function(geohash, callback)
     }
 }
 
+//obtenemos un jugador por su id
+urlModel.getHash = function(hash,callback)
+{
+    if (connection)
+    {
+        var sql = 'SELECT * FROM urls WHERE LEFT (urlAcortada,6) IN (' + connection.escape(hash) + ')';
+        connection.query(sql, function(error, row)
+        {
+            if(error)
+            {
+                throw error;
+            }
+            else
+            {
+                callback(null, row);
+            }
+        });
+    }
+}
+
 //exportamos el objeto para tenerlo disponible en la zona de rutas
 module.exports = urlModel;

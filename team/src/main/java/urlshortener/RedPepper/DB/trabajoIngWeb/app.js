@@ -40,6 +40,9 @@ api.route('/urls/:id')
     .put(UrlsCtrl.update)
     .delete(UrlsCtrl.delete);
 
+api.route('/hash/:hash')
+    .get(UrlsCtrl.findHash);
+
 app.use('/api', api);
 
 // catch 404 and forward to error handler
