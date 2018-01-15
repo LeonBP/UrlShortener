@@ -40,17 +40,13 @@ public class DBOperations {
     public static List<DBUrl> getNearbyHash(List<String> neighbours){
         DBUrl[] DBresult;
         RestTemplate getWithGeo = new RestTemplate();
-        DBresult= getWithGeo.getForObject("http://localhost:3000/api/urls/",DBUrl[].class);
-        ArrayList<DBUrl> list = new ArrayList(Arrays.asList(DBresult));
-        List res = new ArrayList();
-        for(DBUrl row: list){
-            for (String searchHash : neighbours){
-                if (row.getUrlAcortada().startsWith(searchHash)){
-                    res.add(row);
-                }
-            }
+        ArrayList<DBUrl> list = new ArrayList();
+        for (String searchHash : neighbours){
+            DBresult= getWithGeo.getForObject("http://localhost:3000/api/hash/"+searchHash,
+                    DBUrl[].class);
+            list.addAll(Arrays.asList(DBresult));
         }
-        return res;
+        return list;
 
     }
 
