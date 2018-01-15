@@ -5,6 +5,7 @@
  */
 package urlshortener.RedPepper.controllers;
 
+import urlshortener.RedPepper.ExceptionHandlers.ApiException;
 import urlshortener.RedPepper.ExceptionHandlers.NotFoundException;
 import urlshortener.RedPepper.model.Error;
 import org.springframework.core.io.Resource;
@@ -22,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import urlshortener.RedPepper.model.Config;
 
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2017-11-21T17:50:33.590Z")
@@ -40,6 +42,9 @@ public interface DefaultApi {
 
     @RequestMapping(value = "/new",
         method = RequestMethod.POST)
-    ResponseEntity rootPost( @ApiParam(value = "Configuraion of the geohash generator" ,required=true )  @Valid @RequestBody Config mode) throws NotFoundException;
+    ResponseEntity rootPost(HttpServletRequest request,
+                            @ApiParam(value = "Configuraion of the geohash generator" ,required=true )
+                            @Valid @RequestBody Config mode)
+            throws ApiException;
 
 }

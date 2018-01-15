@@ -14,6 +14,7 @@ import urlshortener.RedPepper.ExceptionHandlers.ApiException;
 import urlshortener.RedPepper.model.Error;
 import urlshortener.RedPepper.model.IpGeoResults;
 import urlshortener.RedPepper.model.PinPointParameters;
+import urlshortener.RedPepper.model.PinpointResult;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -32,6 +33,6 @@ public interface PinpointApi {
     
     @RequestMapping(value = "/pinpoint",
         method = RequestMethod.POST,consumes="application/json", produces = "application/json")
-    IpGeoResults pinpointGet(HttpServletRequest request, @RequestBody PinPointParameters jsonParam) throws ApiException;
+    PinpointResult pinpointGet(HttpServletRequest request, @RequestBody PinPointParameters jsonParam) throws ApiException;
 
 }

@@ -7,6 +7,10 @@ import urlshortener.RedPepper.ExceptionHandlers.NotFoundException;
 import urlshortener.RedPepper.model.Checker;
 import urlshortener.RedPepper.model.City;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class DBOperations {
 
     //to check if the city is repeated
@@ -32,6 +36,18 @@ public class DBOperations {
             throw new NotFoundException("No element in Database",1);
         }
         return DBresult[0].getUrl();
+    }
+    public static List<DBUrl> getNearbyHash(List<String> neighbours){
+        DBUrl[] DBresult;
+        RestTemplate getWithGeo = new RestTemplate();
+        ArrayList<DBUrl> list = new ArrayList();
+        for (String searchHash : neighbours){
+            DBresult= getWithGeo.getForObject("http://localhost:3000/api/hash/"+searchHash,
+                    DBUrl[].class);
+            list.addAll(Arrays.asList(DBresult));
+        }
+        return list;
+
     }
 
     public static boolean deleteByHash(String geohash){

@@ -42,6 +42,16 @@ public class IpGeoResults {
         this.longitude = longitude;
     }
 
+    public IpGeoResults() {
+    }
+
+    public IpGeoResults(String ip, String city, Double latitude, Double longitude) {
+        this.ip = ip;
+        this.city = city;
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
+
     private String ip;
 
     private String city;

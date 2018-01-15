@@ -29,7 +29,11 @@ dependencies {
     // https://mvnrepository.com/artifact/com.spatial4j/spatial4j
     compile group: 'com.spatial4j', name: 'spatial4j', version: '0.4.1'
 
+    //https://github.com/tools4j/decimal4j
+    compile 'org.decimal4j:decimal4j:1.0.3'
 
+    //https://github.com/davidmoten/geo
+    compile "com.github.davidmoten:geo:0.7.1"
 
     // Testing framework
     testCompile 'org.springframework.boot:spring-boot-starter-test'

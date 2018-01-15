@@ -2,7 +2,7 @@ package urlshortener.RedPepper.DBConnection;
 
 public class DBUrl {
 
-    public DBUrl(String url, String urlAcortada, float latitud, float longitud) {
+    public DBUrl(String url, String urlAcortada, double latitud, double longitud) {
         this.url = url;
         this.urlAcortada = urlAcortada;
         this.latitud = latitud;
@@ -41,25 +41,25 @@ public class DBUrl {
         this.clicks = clicks;
     }
 
-    public float getLatitud() {
+    public double getLatitud() {
         return latitud;
     }
 
-    public void setLatitud(float latitud) {
+    public void setLatitud(double latitud) {
         this.latitud = latitud;
     }
 
-    public float getLongitud() {
+    public double getLongitud() {
         return longitud;
     }
 
-    public void setLongitud(float longitud) {
+    public void setLongitud(double longitud) {
         this.longitud = longitud;
     }
 
     private String url;
     private String urlAcortada;
     private int clicks = 0;
-    private float latitud;
-    private float longitud;
+    private double latitud;
+    private double longitud;
 }

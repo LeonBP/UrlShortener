@@ -1,5 +1,6 @@
 package urlshortener.team.controllers;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -10,8 +11,10 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.RequestPostProcessor;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import urlshortener.RedPepper.DBConnection.DBOperations;
 import urlshortener.RedPepper.ExceptionHandlers.ExceptionController;
 import urlshortener.RedPepper.controllers.PinpointApiController;
+import urlshortener.RedPepper.model.City;
 import urlshortener.common.repository.ClickRepository;
 import urlshortener.common.repository.ShortURLRepository;
 
@@ -34,13 +37,18 @@ public class PinpointTest {
         this.mockMvc = MockMvcBuilders.standaloneSetup(pinPoint)
                 .setControllerAdvice(new ExceptionController())
                 .build();
+        City ExampleCity = new City("ExampleZaragoza",0,0);
+        DBOperations.addURL(ExampleCity,"http://example.org/","ezrkup30hkr");
     }
-
+    @After
+    public void finish(){
+        DBOperations.deleteByHash("ezrkup30hkr");
+    }
     @Test
     public void thatGetsALocationOnCorrectIP()
             throws Exception {
-        String expectedJson = "{\"ip\":\"90.94.192.43\",\"city\":\"Zaragoza\"," +
-                "\"latitude\":41.6453,\"longitude\":-0.8849}";
+        String expectedJson = "{\"ip\":\"90.94.192.43\",\"city\":\"Zaragoza\",\"latitude\":0.0," +
+                "\"longitude\":0.0,\"hash\":\"ezrkup30hkr\",\"url\":\"http://example.org/\"}";
         String bodyParams = "{\"redirect\": false,\"radio\": 0,\"resultNumber\": 1}";
         mockMvc.perform(post("/pinpoint").with(remoteAddr("90.94.192.43"))
                 .contentType(MediaType.APPLICATION_JSON).content(bodyParams)).andDo(print())
