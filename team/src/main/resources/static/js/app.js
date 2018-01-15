@@ -20,12 +20,12 @@ $(document).ready(
                             + msg
                             + "</a></div>");
                     },
-                    error : function(msg) {
+                    error : function(xhr) {
                         $("#shortURL").html(
                                 "<div class='alert alert-danger lead'><p>"
-                                + msg.code
+                                + xhr.responseJSON.code
                                 + "\n"
-                                + msg.message
+                                + xhr.responseJSON.message
                                 + "</p></div>");
                     }
                 });
@@ -59,13 +59,13 @@ $(document).ready(
                             + msg.url
                             + "</a></div>");
                     },
-                    error : function(msg) {
-                        $("#destination").html(
-                            "<div class='alert alert-danger lead'>"
-                            + msg.code
-                            + " "
-                            + msg.message
-                            + "</div>");
+                    error : function(xhr) {
+                        $("#shortURL").html(
+                                "<div class='alert alert-danger lead'><p>"
+                                + xhr.responseJSON.code
+                                + "\n"
+                                + xhr.responseJSON.message
+                                + "</p></div>");
                     }
                 });
             });

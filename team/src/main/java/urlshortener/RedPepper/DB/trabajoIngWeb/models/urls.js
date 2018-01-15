@@ -21,7 +21,7 @@ if(port === 3000){
     connection = mysql.createConnection(
         {
             host: 'localhost',
-            user: 'root',
+            user: 'mapyoururl',
             password: 'toor',
             database: 'ingWeb'
         }
