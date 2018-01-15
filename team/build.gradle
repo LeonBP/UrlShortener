@@ -28,6 +28,8 @@ dependencies {
 
     // https://mvnrepository.com/artifact/com.spatial4j/spatial4j
     compile group: 'com.spatial4j', name: 'spatial4j', version: '0.4.1'
+    compile "com.google.zxing:core:3.3.0"
+    compile 'com.google.zxing:javase:3.3.0'
 
     //https://github.com/tools4j/decimal4j
     compile 'org.decimal4j:decimal4j:1.0.3'
